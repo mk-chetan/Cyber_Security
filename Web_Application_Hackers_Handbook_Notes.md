@@ -505,4 +505,4 @@ In Blind Xpath injection we can try the substring technique and retrieve the inf
 <!-- Completed till 467/914 (Chapter 12 - Attacking users -  Cross-Site Scripting-->
 
 
-<!-- I have made some changes in the page to test it-->
+<!-- I have made some changes in the page to test it 2 -->
