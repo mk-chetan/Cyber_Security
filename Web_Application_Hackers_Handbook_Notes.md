@@ -478,14 +478,17 @@ In Blind Xpath injection we can try the substring technique and retrieve the inf
 - Forward slash — ```%2f```
 - Backslash — ```%5c```
 2. Try using 16-bit Unicode encoding:
+
 - Dot — ```%u002e```
 - Forward slash — ```%u2215```
 - Backslash — ```%u2216```
 3. Try double URL encoding:
+
 - Dot — ```%252e```
 - Forward slash — ```%252f```
 - Backslash — ```%255c```
 4. Try overlong UTF-8 Unicode encoding:
+
 - Dot — ```%c0%2e```, ```%e0%40%ae```, ```%c0ae```, and so on
 - Forward slash — ```%c0%af```, ```%e0%80%af```, ```%c0%2f```, and so on
 - Backslash — ```%c0%5c```, ```%c0%80%5c```, and so on
@@ -500,3 +503,6 @@ In Blind Xpath injection we can try the substring technique and retrieve the inf
 - Page 448 (Insurance based flaw)
 
 <!-- Completed till 467/914 (Chapter 12 - Attacking users -  Cross-Site Scripting-->
+
+
+<!-- I have made some changes in the page to test it 2 -->
