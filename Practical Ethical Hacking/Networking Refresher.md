@@ -83,3 +83,75 @@ Below are the commonly used ports and protocols associated:
 - LDAP (Lightweight Directory Access Protocol): Port 389 (TCP and UDP)
 - MySQL: Port 3306 (TCP)
 
+
+### OSI Model:
+
+**Mnemonic:**
+1) P (Physical Layer) - Please
+2) D (Data Layer) - Do
+3) N (Network Layer) - Not
+4) T (Transport Layer) - Throw
+5) S (Session Layer) - Sausage
+6) P (Presentation Layer) - Pizza
+7) A (Application Layer) - Away
+
+**Example of each layer:**
+1) Physical - Data cables
+2) Data - Switching, MAC Address
+3) Network - IP Address, routing
+4) Transport - TCP/UDP
+5) Session - session management
+6) Presentation - WMV, JPEG, MOV
+7) Application - HTTP, SMTP
+
+**Description:**
+
+The OSI (**Open Systems Interconnection**) model is a conceptual framework that standardizes the functions of a communication system into seven distinct layers. Each layer has specific responsibilities and interacts with the layers above and below it. The OSI model provides a structured approach to understanding and designing network protocols and communication systems. Here's a brief overview of each layer:
+
+1. **Physical Layer**: The physical layer is responsible for the transmission and reception of raw unstructured data bits over a physical medium. It defines the electrical, mechanical, and functional characteristics of the physical interface between devices.
+2. **Data Link Layer**: The data link layer handles the reliable transmission of data frames between directly connected nodes over a physical link. It provides error detection and correction, flow control, and handles access to the physical medium. Ethernet, Wi-Fi, and PPP (Point-to-Point Protocol) are examples of data link layer protocols.
+3. **Network Layer**: The network layer enables the routing of data packets across different networks. It deals with logical addressing and determines the best path for data delivery based on network conditions and routing protocols. The IP (Internet Protocol) is a key network layer protocol.
+4. **Transport Layer**: The transport layer ensures the reliable and orderly delivery of data between end systems. It breaks data into smaller segments, manages end-to-end communication, and provides error recovery, flow control, and congestion control. **TCP** (Transmission Control Protocol) and **UDP** (User Datagram Protocol) operate at this layer.
+5. **Session Layer:** The session layer establishes, manages, and terminates communication sessions between applications. It provides synchronization and dialog control mechanisms to enable seamless communication between devices. This layer also handles session checkpointing and recovery.
+6. **Presentation Layer**: The presentation layer is responsible for data representation, encryption, compression, and formatting. It ensures that data sent by the application layer of one system is understandable by the application layer of another system. This layer deals with data syntax and semantics.
+7. **Application Layer**: The application layer is the closest layer to the end-user and provides services directly to user applications. It includes protocols for various application-level services such as file transfer, email, web browsing, and remote access. Examples of protocols at this layer include HTTP, SMTP, FTP, and DNS.
+
+
+### Subnetting:
+
+Subnetting is the process of dividing a network into smaller subnetworks called subnets. It allows for more efficient use of IP addresses and facilitates network management and routing. Subnetting is commonly used in IPv4 networks.
+
+Subnetting involves borrowing bits from the host portion of an IP address to create a subnet identifier. By doing this, a network can be divided into multiple subnets, each with its own range of IP addresses.
+
+CIDR (**Classless Inter-Domain Routing**) notation is a method used to represent IP addresses and their corresponding subnet masks. It specifies the network prefix length, which indicates the number of bits used for the network portion of the IP address. CIDR notation is expressed by appending a forward slash (/) followed by the prefix length to the IP address.
+
+Here's an example to illustrate subnetting and CIDR notation:
+
+Consider an IP address: 192.168.0.0/24
+
+In this example, the IP address is in the format of "192.168.0.0" and the "/24" represents the prefix length, indicating that the first 24 bits represent the network portion of the IP address, while the remaining 8 bits represent the host portion.
+
+With a /24 prefix length, the subnet mask for this network would be 255.255.255.0. This means that the first three octets are reserved for the network, and the last octet can be used for addressing hosts within the subnet.
+
+To subnet this network further, additional bits can be borrowed from the host portion. For instance, if we borrow 2 bits, we can create 4 subnets. The subnet mask would become 255.255.255.192 (in binary: 11111111.11111111.11111111.11000000).
+
+The four resulting subnets would be:
+
+1. Subnet 1: 192.168.0.0/26 (network range: 192.168.0.0 - 192.168.0.63)
+2. Subnet 2: 192.168.0.64/26 (network range: 192.168.0.64 - 192.168.0.127)
+3. Subnet 3: 192.168.0.128/26 (network range: 192.168.0.128 - 192.168.0.191)
+4. Subnet 4: 192.168.0.192/26 (network range: 192.168.0.192 - 192.168.0.255)
+
+Each subnet can then be assigned to a different segment or used for different purposes within the network.
+
+**More Examples**:
+IP Range                Subnet            Hosts    Network       Broadcast
+192.168.0.0/22 - 255.255.252.0 - 1022 - 192.168.0.0 -  192.168.3.255
+192.168.1.0/26 - 255.255.255.192 - 62 - 192.168.1.0 -  192.168.1.63
+192.168.1.0/27 - 255.255.255.224 - 30 - 192.168.1.0 -  192.168.1.31
+
+**Reference:**
+Subnet Guide:
+![[Subnet-Guide.xlsx]]
+
+
