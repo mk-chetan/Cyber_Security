@@ -151,7 +151,7 @@ IP Range                Subnet            Hosts    Network       Broadcast
 192.168.1.0/27 - 255.255.255.224 - 30 - 192.168.1.0 -  192.168.1.31
 
 **Reference:**
-Subnet Guide:
+Subnet Guide: Uploaded to the github Cyber_Security/Practical Ethical Hacking path
 ![[Subnet-Guide.xlsx]]
 
 
