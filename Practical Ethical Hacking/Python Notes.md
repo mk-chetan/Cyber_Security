@@ -457,3 +457,338 @@ Looping provides a powerful mechanism for iterating over data, performing calcul
 
 ### Dictionaries:
 
+In Python, a dictionary is an unordered collection of key-value pairs. It is a versatile and powerful data structure that allows you to store, retrieve, and manipulate data based on unique keys. Here's an explanation of dictionaries in Python:
+
+**Dictionary Creation:**
+
+To create a dictionary, you enclose key-value pairs within curly braces `{ }`, separating each pair with a colon `:`. Here's an example:
+
+`student = {`
+    `"name": "Alice",`
+    `"age": 20,`
+    `"major": "Computer Science"`
+`}`
+
+**Dictionary Access:**
+
+You can access the values in a dictionary by referring to their corresponding keys. Keys provide a way to uniquely identify and retrieve values. Here's an example:
+
+`print(student["name"])   # Output: "Alice"`
+`print(student["age"])    # Output: 20`
+
+**Dictionary Modification:**
+
+Dictionaries are mutable, which means you can modify their values by assigning new values to specific keys. Here's an example:
+
+`student["age"] = 21       # Modifying a value`
+`student["city"] = "London"    # Adding a new key-value pair`
+
+**Dictionary Operations:**
+
+Python provides various operations that can be performed on dictionaries. Some common operations include:
+
+- Length: The `len()` function returns the number of key-value pairs in a dictionary.
+- Iteration: You can iterate over the keys, values, or key-value pairs of a dictionary using loops.
+- Deletion: You can remove a key-value pair from a dictionary using the `del` keyword.
+
+Here are some examples:
+
+`student = {`
+    `"name": "Alice",`
+    `"age": 20,`
+    `"major": "Computer Science"`
+`}`
+
+`print(len(student))          # Output: 3`
+
+`for key in student:`
+    `print(key, student[key])  # Output: "name Alice", "age 20", "major Computer Science"`
+
+`del student["age"]           # Deleting a key-value pair`
+
+Dictionaries are powerful data structures that provide a flexible way to store and retrieve data based on keys. They are commonly used for organizing and manipulating data that requires quick and efficient access.
+
+
+### Importing Modules:
+
+In Python, importing modules allows you to access and use code that resides in external Python files or libraries. Modules are a way to organize and reuse code, making it easier to manage and maintain large projects. Here's an explanation of importing modules in Python:
+
+1. Importing Entire Modules:
+2. To import an entire module, you use the `import` keyword followed by the module name. Here's an example:
+
+`import math`
+
+`result = math.sqrt(25)`
+`print(result)   # Output: 5.0`
+
+In this example, the `math` module is imported, and the `sqrt()` function from the module is used to calculate the square root of 25.
+
+1. Importing Specific Functions or Variables:
+2. If you only need to use specific functions or variables from a module, you can import them directly. Here's an example:
+
+`from math import sqrt`
+
+`result = sqrt(25)`
+`print(result)   # Output: 5.0`
+
+In this case, only the `sqrt()` function is imported from the `math` module, so you can use it directly without prefixing it with the module name.
+
+1. Importing Modules with an Alias:
+2. You can also import a module and give it an alias using the `as` keyword. This can be helpful when dealing with modules with long names or to avoid naming conflicts. Here's an example:
+
+`import math as m`
+
+`result = m.sqrt(25)`
+`print(result)   # Output: 5.0`
+
+In this example, the `math` module is imported and assigned the alias `m`, so you can use `m.sqrt()` instead of `math.sqrt()`.
+
+1. Importing All Functions and Variables:
+2. If you want to import all functions and variables from a module, you can use the `*` wildcard character. However, it is generally recommended to import only what you need to avoid namespace pollution. Here's an example:
+
+`from math import *`
+
+`result = sqrt(25)`
+`print(result)   # Output: 5.0`
+
+In this case, all functions and variables from the `math` module are imported directly, allowing you to use them without prefixing with the module name.
+
+Importing modules enables you to access and utilize a wide range of functionality provided by the Python standard library or third-party libraries. It promotes code reusability, modularity, and maintainability in your Python programs.
+
+### Sockets:
+
+In Python, sockets are a fundamental networking concept used for communication between computers over a network. Sockets enable programs to establish connections, send data, and receive data over various network protocols, such as TCP (Transmission Control Protocol) and UDP (User Datagram Protocol). Here's an explanation of sockets in Python:
+
+**Socket Creation:**
+
+To use sockets in Python, you need to import the `socket` module. You can create a socket object using the `socket.socket()` function, which takes two parameters: the address family (e.g., `socket.AF_INET` for IPv4) and the socket type (e.g., `socket.SOCK_STREAM` for TCP or `socket.SOCK_DGRAM` for UDP). Here's an example:
+
+`import socket`
+
+`# Create a TCP socket`
+`tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)`
+
+#`Create a UDP socket`
+`udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)`
+
+
+**Socket Communication:**
+
+Once you have a socket object, you can use various methods to establish connections, send data, and receive data. Here are some commonly used methods:
+
+- `socket.connect(address)`: Establishes a connection to a remote address.
+- `socket.bind(address)`: Binds the socket to a specific address and port.
+- `socket.listen(backlog)`: Listens for incoming connections on a TCP socket.
+- `socket.accept()`: Accepts an incoming connection and returns a new socket object for communication.
+- `socket.send(data)`: Sends data over the socket.
+- `socket.recv(buffer_size)`: Receives data from the socket.
+
+Here's an example of a basic TCP server that listens for incoming connections:
+
+`import socket`
+
+#`Create a TCP socket`
+`server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)`
+
+#`Bind the socket to a specific address and port`
+`server_address = ('localhost', 1234)`
+`server_socket.bind(server_address)`
+
+#`Listen for incoming connections`
+`server_socket.listen(5)`
+
+`while True:`
+    `# Accept a client connection`
+    `client_socket, client_address = server_socket.accept()`
+    
+    # Receive and send data
+    data = client_socket.recv(1024)
+    client_socket.send(b"Received: " + data)
+
+    # Close the client socket
+    client_socket.close()
+
+Socket programming in Python allows you to create client-server applications, networked applications, and perform various networking tasks. It provides a powerful and flexible way to communicate over networks using different protocols. The `socket` module in Python provides a wide range of functions and methods to handle network communication efficiently.
+
+
+### Port Scanner (Python Code):
+
+`#!/bin/python3`
+
+`import sys`
+`import socket`
+`from datetime import datetime as dt`
+`try:`
+	`if(len(sys.argv)==2):`
+		`target = socket.gethostbyname(sys.argv[1])`
+	`else:`
+		`print("Invalid amount of arguments.")`
+		`print("Syntax: python3 scanner.py <ip>")`
+`except socket.gaierror:`
+	`print("Hostname could not be resolved.")`
+	`sys.exit()`
+`#Pretty banner`
+
+`print("-"*50)`
+`print("Scanning target: "+ target)`
+`print("Time started: "+ str(dt.now()))`
+`print("-"*50)`
+
+`try:`
+	`for port in range(50,85):`
+		`s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)`
+		`socket.setdefaulttimeout(1)`
+		`result = s.connect_ex((target,port))`
+		`if result == 0:`
+			`print(f"Port {port} is open")`
+		`s.close()`
+`except KeyboardInterrupt:`
+	`print("\nExisting program.")`
+	`sys.exit()`
+`except socket.error:`
+	`print("Could not connect to server.")`
+	`sys.exit()`
+
+	
+
+### User Input:
+
+In Python, you can interact with the user and receive input using the `input()` function. The `input()` function allows you to prompt the user for input and receive the input as a string. Here's an explanation of user input in Python:
+
+`name = input("Enter your name: ")`
+`print("Hello, " + name + "!")`
+
+In this example, the `input()` function is used to prompt the user to enter their name. The message "Enter your name: " is displayed to the user as a prompt. The user can then type their name and press Enter. The input provided by the user is stored in the variable `name`, and the program prints a greeting using the entered name.
+
+The `input()` function always returns the user's input as a string. If you need to convert the input to a different data type, such as an integer or float, you can use appropriate conversion functions like `int()` or `float()`.
+
+`age = input("Enter your age: ")`
+`age = int(age)  # Convert the input to an integer`
+
+`print("You will be " + str(age + 1) + " next year.")`
+
+In this example, the user is asked to enter their age. The input is stored as a string in the variable `age`. To perform arithmetic calculations, the input is converted to an integer using the `int()` function. The program then adds 1 to the age and prints the result.
+
+When using user input, keep in mind that it is a string by default. Ensure proper validation and error handling if you expect specific data types or want to handle invalid input.
+
+User input allows you to make your programs interactive and dynamic by accepting input from users during runtime. It provides a way to customize program behavior based on user responses.
+
+
+### Reading and Writing Files:
+
+In Python, you can read from and write to files using file objects and various methods provided by the built-in `open()` function. Here's an explanation of reading from and writing to files in Python:
+
+**Reading Files:**
+
+To read from a file, you need to open it in read mode using the `open()` function. Once the file is open, you can use methods like `read()`, `readline()`, or `readlines()` to retrieve the contents of the file.
+
+- `read()`: Reads the entire content of the file as a string.
+- `readline()`: Reads a single line from the file.
+- `readlines()`: Reads all lines from the file and returns them as a list.
+
+Here's an example of reading from a file:
+
+#`Open the file in read mode`
+`file = open("example.txt", "r")`
+
+#`Read the entire content`
+`content = file.read()`
+`print(content)`
+
+#`Read a single line`
+`line = file.readline()`
+`print(line)`
+
+#`Read all lines`
+`lines = file.readlines()`
+`print(lines)`
+
+#`Close the file`
+`file.close()`
+
+
+**Writing Files:**
+
+To write to a file, you need to open it in write mode using the `open()` function. Once the file is open, you can use the `write()` method to write content to the file.
+
+- `write(content)`: Writes the specified content to the file.
+
+Here's an example of writing to a file:
+
+#`Open the file in write mode`
+`file = open("example.txt", "w")`
+
+#`Write content to the file`
+`file.write("Hello, World!\n")`
+`file.write("This is a new line.")`
+
+#`Close the file`
+`file.close()`
+
+
+**Appending to Files:**
+
+To append content to an existing file without overwriting its existing contents, you can open the file in append mode (`"a"`) using the `open()` function. Then, you can use the `write()` method to append content to the file.
+
+#`Open the file in append mode`
+`file = open("example.txt", "a")`
+
+#`Append content to the file`
+`file.write("\nThis is appended content.")`
+
+#`Close the file`
+`file.close()`
+
+
+It is generally recommended to use the `with` statement when working with files. This ensures that the file is properly closed even if an exception occurs.
+
+`with open("example.txt", "r") as file:`
+    `content = file.read()`
+    `print(content)`
+
+Reading and writing files in Python allows you to handle external data, process large amounts of information, and store program outputs for later use. It is important to properly manage file resources and close them after use to avoid memory leaks and ensure data integrity.
+
+
+
+### Classes and Objects:
+
+In Python, classes and objects are key components of object-oriented programming (OOP). They provide a way to structure code and define custom data types. Here's an explanation of classes and objects in Python:
+
+**Classes:**
+
+A class is a blueprint or a template for creating objects. It defines the properties (attributes) and behaviors (methods) that objects of that class will possess. You can think of a class as a blueprint for creating instances of objects with similar characteristics and functionalities. Here's an example of a simple class definition:
+
+`class Dog:`
+    `def __init__(self, name, age):`
+        `self.name = name`
+        `self.age = age`
+
+    def bark(self):
+        print("Woof!")
+
+    def display_info(self):
+        print("Name:", self.name)
+        print("Age:", self.age)
+
+In this example, the `Dog` class has attributes `name` and `age`, and methods `bark()` and `display_info()`. The `__init__()` method is a special method known as the constructor, which is called when an object of the class is created.
+
+**Objects:**
+
+An object is an instance of a class. It is created based on the blueprint provided by the class. Each object has its own set of attributes and can invoke the methods defined in the class. You create objects by calling the class as if it were a function. Here's an example:
+
+`#Create objects of the Dog class`
+`dog1 = Dog("Buddy", 5)`
+`dog2 = Dog("Max", 3)`
+
+`#Call methods on the objects`
+`dog1.bark()               # Output: "Woof!"`
+`dog1.display_info()       # Output: "Name: Buddy", "Age: 5"`
+
+`dog2.bark()               # Output: "Woof!"`
+`dog2.display_info()       # Output: "Name: Max", "Age: 3"`
+
+In this example, `dog1` and `dog2` are objects created from the `Dog` class. Each object has its own set of attributes (`name` and `age`) and can invoke the methods (`bark()` and `display_info()`) defined in the class.
+
+Classes and objects are essential in object-oriented programming as they provide a way to organize code, encapsulate data, and define reusable entities. They enable you to model real-world entities, create custom data types, and build complex systems by leveraging the principles of inheritance, polymorphism, and encapsulation.
+
+
