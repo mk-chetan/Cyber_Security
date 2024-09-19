@@ -2,7 +2,9 @@
 ## Websites/Tools Used & Useful:
 
 - bugcrowd.com
-
+- burpsuite (Application - Information Gathering)
+- Google fu (Keyword searching for sub domains and other info)
+	- https://ahrefs.com/blog/google-advanced-search-operators/
 #### Discovering Email Addresses:
 
 - hunter.io
