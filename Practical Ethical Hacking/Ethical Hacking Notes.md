@@ -12,6 +12,9 @@ Notes:
 
 In the scanning stage, the ethical hacker actively probes the target system or network to discover open ports, services, and vulnerabilities. Various tools and techniques are employed, such as port scanning, network mapping, and vulnerability scanning. This stage helps identify potential weaknesses that can be exploited.
 
+Notes:
+[[Ethical Hacking Methodology (Scanning & Enumeration)]]
+
 **Gaining Access:**
 
 In this stage, the ethical hacker attempts to gain unauthorized access to the target system or network. The focus is on exploiting vulnerabilities discovered during the scanning stage. Techniques such as password cracking, social engineering, and exploiting software vulnerabilities may be employed to gain access to the target system.
