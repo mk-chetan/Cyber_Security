@@ -1,0 +1,71 @@
+
+## Tools and Details:
+
+#### 1) NMAP:
+
+- Network mapping (NMAP) is used to discover hosts and services on a computer network by sending packets and analyzing the responses.
+	- syntax:
+		- `nmap -T4 -p- -A`
+			- -T4 is for the speed (1 is slow, and 5 is fast)
+			- -p- (Scan all ports)
+			- -A (All the details)
+		- `nmap --help`
+#### 2) Net discover:
+
+- Network discovery in Kali Linux is the process of identifying and mapping devices on a network, which can help with security and troubleshooting: 
+	- Netdiscover- A tool built into Kali Linux that can be used to scan wireless and switched networks. It can passively detect hosts, or actively search for them by sending ARP requests. You can use Netdiscover to scan a range of IP addresses, do a passive scan, or inspect network ARP traffic
+#### 3) Directory busting:\
+
+- Directory busting, also known as directory brute forcing or directory enumeration, is a technique used in ethical hacking to find hidden or unprotected directories and files on a web server or application
+	- Tools:
+		- dirbuster
+		- dirb
+		- gobuster
+
+#### 4) Nikto (Tool - Web Vulnerability Scanner):
+
+- Nikto is a free, open-source tool that scans web servers for vulnerabilities. It can identify a variety of issues, including: Outdated software versions, Dangerous files and programs, Server configuration errors, Potential vulnerabilities, and Cookies received.
+	- Syntax:
+		- `nikto -h {ip-address}`
+#### 5) Burp Suite (Enumeration and web proxy):
+
+- Burp Suite is a software tool that helps identify vulnerabilities in web applications through security audits and penetration tests. It's a collection of tools that can be used together, and it's often used by professional pentesters, ethical hackers, and security researchers.
+#### 6) Metasploit:
+
+- Metasploit is a built in tool in Kali linux, which helps with the exploits, Auxiliary (Enumeration/gathering information), Payloads and etc
+- Helpful Syntaxs:
+	- `msfconsole` -  to open/start the metasploit console
+	- `search smb_version` - This command can be used inside the msfconsole to find a module quickly
+	- `use auxiliary/scanner/smb/smb_version` - Use this command to find the syntax to use the module, to found in the search results
+		- `info` - can be used to provide more info of the module, we just used and info about the options as well
+		- `options` - we can also use options check the setting of the module set
+			- RHOSTS - this is the host/ip address
+			- RPORTS & THREADS
+		- `set RHOSTS {ip_address}` - This can be used to modify the options and then run the module
+		- `run` - After setting the options using set for RHOSTS and other required options, provide run and metasploit, starts the scan for the ip address and tries to find the SMB version
+
+#### 7)  smbclient:
+
+-  This tool can be used to connect to a smb (File transfer), anonymously if we have access, it will output share-names present in the ip-address and we can use the second syntax to connect to each
+	- Syntax:
+		- `smbclient -L \\\\{ip-address}\\`
+			- -L is used to list out the files
+		- `smbclient \\\\{ip-address}\\ADMIN$`
+		- `smbclient \\\\{ip-address}\\IPC$`
+
+#### 8) SSH (Secure Shell):
+
+- SSH stands for Secure Shell or Secure Socket Shell. It's a network protocol that allows two computers to communicate and share data securely, even over an unsecured network
+	- Syntax:
+		- `SSH {ip-address}`
+		- If we observe an error for the "no matching key exchange method found"
+			- We can add `SSH {ip-address} -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc`
+			- oKexAlgorithms is for the encrypion algorithm, we can choose from the they offer output of the 'no matching key exchange method found'
+			- -c is for cipher, this can also be picked from they offer cipher error
+
+#### 9) Searchsploit:
+
+-  This is just a handy tool for searching exploits inside the kali machine, this tool search the database of exploits, that is stored locally
+	- Syntax:
+		- `searchsploit samba 2`
+		- `searchsploit mod ssl 2`
