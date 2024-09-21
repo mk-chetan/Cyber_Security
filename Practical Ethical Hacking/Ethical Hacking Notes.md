@@ -1,6 +1,9 @@
 
 Ethical hacking, also known as penetration testing or white-hat hacking, follows a structured approach to identify and address vulnerabilities in computer systems and networks. The ethical hacking process typically involves the following five stages:
 
+**Reconnaissance/Information gathering & Scanning/Enumeration - are the main parts of Ethical Hacking, to grab as much information as possible, before exploiting anything.**
+
+
 **Reconnaissance:** 
 
 The reconnaissance stage involves gathering information about the target system or network. It includes passive information gathering techniques such as searching publicly available information, browsing websites, and examining DNS records. The goal is to collect as much information as possible to understand the target and identify potential entry points.
