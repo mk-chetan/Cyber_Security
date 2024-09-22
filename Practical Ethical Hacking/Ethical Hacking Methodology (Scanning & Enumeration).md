@@ -69,3 +69,17 @@
 	- Syntax:
 		- `searchsploit samba 2`
 		- `searchsploit mod ssl 2`
+
+#### 10) Nessus:
+
+- Nessus is a vulnerability scanning tool that helps identify security weaknesses in networks and systems. It's used to check devices, applications, operating systems, and cloud services for vulnerabilities that could be exploited by hackers.
+	- Syntax:
+		- Download the nessus debain installation file from the website for nessus
+			- `sudo dpkg -i Nessus-verison.deb`
+				- `dpkg` - De-package and `-i` - Install
+			- Once the install is completed, we can start nessus with below syntax:
+				- `systemctl start nessusd`
+			- And to access the nesses use the below url
+				- `https://kali:8834`
+- Once the installation is completed and the plugins are installed, we can start a new scan for a network/vulnerability scan and provide the required details, such as target-ip address and the ports to scan and the type of web vulnerabilities to scan.
+- Once the scan is completed. we can use the report to view the critical and other vulnerabilities present in the provided server/ip-address of the server.
