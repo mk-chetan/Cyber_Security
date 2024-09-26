@@ -83,3 +83,25 @@
 				- `https://kali:8834`
 - Once the installation is completed and the plugins are installed, we can start a new scan for a network/vulnerability scan and provide the required details, such as target-ip address and the ports to scan and the type of web vulnerabilities to scan.
 - Once the scan is completed. we can use the report to view the critical and other vulnerabilities present in the provided server/ip-address of the server.
+
+#### 11) Hash identifier:
+
+- Hash identifier is a tool, built in kali systems. This can be used to identify a possible HASH.
+	- Syntax:
+		- `hash-identifier`
+			- Once it loads up, provide the HASH to determine what type of HASH it is.
+
+#### 12) Hash Cat:
+
+- Hash cat is also a tool which is built in kali, and it is used to crack the Hashes.
+	- Syntax:
+		- `hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt`
+			- -m  is module and we are using module 0, as its correlates to MD5
+			- hashes.txt is the file containing the hashes we want to crack
+			- /usr..../rockyou.txt - this is the wordlist provided to crack the MD5 Hash
+	- You can google, hashcat MD5 crack and you can find the module to use and the wordlists to use for MD5 and other HASH types as required.
+	- Note: HashCat uses CPU to crack passwords
+
+#### 13) Hash Cracker:
+
+- Hash Cracker is similar to the Hash Cat, but it runs with GPU, so make sure run the Hash Cracker in the local machine and not the virtual machine.
