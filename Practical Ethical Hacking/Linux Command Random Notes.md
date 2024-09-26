@@ -207,6 +207,11 @@
 - Explanation: Opens the Mousepad text editor and allows you to create or edit the content of a file named "newfile.txt".
     - Example: Running `mousepad newfile.txt` would open the Mousepad editor, where you can enter or modify text in the "newfile.txt" file.
 
+`locate newfile.txt`:
+
+- Explanation: This command can be used to locate any required file in the whole directory and returns back with the file path, if it finds any results.
+	- Example: Running `locate newfile.txt` will return the paths, were it can find the file name.
+
 `sudo service apache2 start`:
 
 - Explanation: Starts the Apache web server service.
