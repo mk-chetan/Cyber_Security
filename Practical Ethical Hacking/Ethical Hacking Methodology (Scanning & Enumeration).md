@@ -5,7 +5,7 @@
 
 - Network mapping (NMAP) is used to discover hosts and services on a computer network by sending packets and analyzing the responses.
 	- syntax:
-		- `nmap -T4 -p- -A`
+		- `nmap -T4 -p- -A {ip-address}`
 			- -T4 is for the speed (1 is slow, and 5 is fast)
 			- -p- (Scan all ports)
 			- -A (All the details)
@@ -21,6 +21,14 @@
 		- dirbuster
 		- dirb
 		- gobuster
+		- fuff
+			- We need to install fuff into kali linux with `apt install fuff` 
+			- This is helpful to find one directory deep 
+			- Syntax:
+				- `fuff -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt:FUZZ -u http://{ip-address}/FUZZ`
+				- -w is the wordlists path, we are using dirbusters medium wordlists file
+				- :FUZZ at the end of the wordlists, mentions to use the wordlists at the FUZZ placeholder
+				- -u - provide the ip-address/FUZZ (placeholder for the wordlists to attack)
 
 #### 4) Nikto (Tool - Web Vulnerability Scanner):
 
@@ -105,3 +113,5 @@
 #### 13) Hash Cracker:
 
 - Hash Cracker is similar to the Hash Cat, but it runs with GPU, so make sure run the Hash Cracker in the local machine and not the virtual machine.
+
+
