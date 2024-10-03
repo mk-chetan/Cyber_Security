@@ -71,14 +71,21 @@
 			- oKexAlgorithms is for the encrypion algorithm, we can choose from the they offer output of the 'no matching key exchange method found'
 			- -c is for cipher, this can also be picked from they offer cipher error
 
-#### 9) Searchsploit:
+#### 9) Telnet:
+
+- Telnet is a network protocol that allows users to remotely access a computer and communicate with it through a text-based interface.
+	- Syntax:
+		- `telnet {ip-address} {port}`
+
+
+#### 10) Searchsploit:
 
 -  This is just a handy tool for searching exploits inside the kali machine, this tool search the database of exploits, that is stored locally
 	- Syntax:
 		- `searchsploit samba 2`
 		- `searchsploit mod ssl 2`
 
-#### 10) Nessus:
+#### 11) Nessus:
 
 - Nessus is a vulnerability scanning tool that helps identify security weaknesses in networks and systems. It's used to check devices, applications, operating systems, and cloud services for vulnerabilities that could be exploited by hackers.
 	- Syntax:
@@ -92,14 +99,14 @@
 - Once the installation is completed and the plugins are installed, we can start a new scan for a network/vulnerability scan and provide the required details, such as target-ip address and the ports to scan and the type of web vulnerabilities to scan.
 - Once the scan is completed. we can use the report to view the critical and other vulnerabilities present in the provided server/ip-address of the server.
 
-#### 11) Hash identifier:
+#### 12) Hash identifier:
 
 - Hash identifier is a tool, built in kali systems. This can be used to identify a possible HASH.
 	- Syntax:
 		- `hash-identifier`
 			- Once it loads up, provide the HASH to determine what type of HASH it is.
 
-#### 12) Hash Cat:
+#### 13) Hash Cat:
 
 - Hash cat is also a tool which is built in kali, and it is used to crack the Hashes.
 	- Syntax:
@@ -110,8 +117,21 @@
 	- You can google, hashcat MD5 crack and you can find the module to use and the wordlists to use for MD5 and other HASH types as required.
 	- Note: HashCat uses CPU to crack passwords
 
-#### 13) Hash Cracker:
+#### 14) Hash Cracker:
 
 - Hash Cracker is similar to the Hash Cat, but it runs with GPU, so make sure run the Hash Cracker in the local machine and not the virtual machine.
+
+
+#### 15) DNSRECON:
+
+- Dnsrecon is a tool inbuilt into kali linux, which can be used to do the revese lookup and find the dns for the ip-address.
+	- Syntax:
+		- `dnsrecon -r 127.0.0.0/24 -n {target_ip_address}`
+			- -r is range
+			- -n ip-address of the target
+- If a dns record is observed, we can add the dns to the attacker's etc/hosts using below:
+	- `nano /etc/hosts`
+	- Once opened add the target's ip-address with the dns name that we observed with the dnsrecon
+
 
 
