@@ -108,6 +108,7 @@
 
 #### 13) Hash Cat:
 
+#HASHCat
 - Hash cat is also a tool which is built in kali, and it is used to crack the Hashes.
 	- Syntax:
 		- `hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt`
@@ -116,6 +117,10 @@
 			- /usr..../rockyou.txt - this is the wordlist provided to crack the MD5 Hash
 	- You can google, hashcat MD5 crack and you can find the module to use and the wordlists to use for MD5 and other HASH types as required.
 	- Note: HashCat uses CPU to crack passwords
+	- If we know the hash type and need to check of which module to use for the hashcat, we use the syntax: `sudo hashcat --help | grep NTLM` (for example) to find the module number
+	- We can also search in google for the hashcat modules and use the url: https://hashcat.net/wiki/doku.php?id=example_hashes to find the hash, we are searching for.
+	- For NTLMv2 it will be: `sudo hashcat -m 5600 hashes.txt /usr/share/wordlists/rockyou.txt`
+
 
 #### 14) Hash Cracker:
 
