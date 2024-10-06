@@ -1,4 +1,16 @@
 
+Quick Information:
+#### Initial Internal Attack Strategy ( To get started with the AD Pentest):
+
+- Begin day with mitm6 or Responder (Prefer Responder for longer sessions, as mitm6 might cause outage)
+- Run scans to generate traffic while running Responder (Scans like nessus, vulnerability scans, etc)
+- If scans are taking too long, look for websites in scope (Using http_version in metasploit to sweep the network and subnets to see if we have any hosts alive)
+- Look for default credentials on web logins
+	- Printers
+	- Jenkins
+	- Etc
+- Think outside the box
+
 #### LLMNR (Link Local Multicast Name Resolution) Poisoning ( #LLMNR):
 
 - Used to identify hosts when DNS fails to do so.
@@ -70,5 +82,67 @@
 	- And also if the user from machine1 is already added, but for some case, is not showing up in the administrative group policy, start the domain controller and then check once, if not try to add the user again into the machine2.
 
 
+
+#### SMB Relay Attack Mitigation ( #SMB )
+
+- Enable SMB Signing on all devices
+	- Pro: Completely stops the attack
+	- Con: Can cause performance issues with file copies
+- Disable NTLM authentication on network
+	- Pro: Completely stops the attack
+	- Con: If Kerberos stops working, Windows defaults back to NTLM
+- Account tiering:
+	- Pro: Limits domain admins to specific tasks (e.g only log onto servers with need for DA)
+	- Con: Enforcing the policy may be difficult
+- Local admin restriction:
+	- Pro: Can prevent a lot of lateral movement
+	- Con: Potential increase in the amount of service desk tickets
+
+
+#### Gaining Shell Access (After SMB relay attack) ( #SMB , #Shell):
+
+- We can get the shell access in the ntlmrelayx attack while exploiting the SMB relay, but we can also gain access to shell as below (Make sure that the windows defender is turned off in the target machine, or the attack will be blocked):
+	1) Through Metasploit - with a password: `use exploit/windows/smb/psexec` and set the RHOSTS, SMBDomain, SMBPass and SMBUser
+	2) Through Metasploit - with a hash: `use exploit/windows/smb/psexec` instead of password in the SMBPass. we will provide the hash (lmhash:nthash) , unset the domain (if set), set the SMBUser to 'administrator'/ local user, we are trying to login as.
+	3) Through psexec tool - with a password: `psexec.py {domain}.local/{username}:'{Password}'@{ip-address}`
+	4) Through psexec tool - with a hash: `psexec.py {username}@{ip-address} -hashes {LM:NT}`
+	5) If psexec is blocked by antivirus, we can also try (both with password or hash):
+		1) `wmiexec.py {domain}.local/{username}:'{Password}'@{ip-address}`
+		2) `smbexec.py {domain}.local/{username}:'{Password}'@{ip-address}`
+
+
+#### IPv6 DNS Takeover Attack via mitm6 (man in the middle6) ( #IPv6 #Important ):
+
+- IPv6 DNS Takeover is the attack, were the attacker machine, will be acting as a DNS server for the IPv6 address, this can be done using the mitm6 tool:
+	- Step1: Start a ntlmrelayx with the ldaps for the mitm6
+		- `ntlmrelayx.py -6 -t ldaps://{ip-address(of the DC)} -wh fakewpad.marvel.local -l lootme`
+			- -6 indicating we are using ipv6
+			- -t (target)
+			- -wh (this is for wpad)
+			- -l (for loot, and the lootme is just a folder name)
+	- Step2: Start the mitm6 with the below syntax:
+		- `sudo mitm6 -d {domain-name}`
+		- ex: `sudo mitm6 -d marvel.local`
+	- Step3: Wait for an event, such as a system/machine reboot and mitm6 picks it immediately and the ntlmrelayx after the attack is succeeded, will create a lootme folder in the directory with all the domain_computers, domain_users, domain_groups and domain_user_by group details
+	- Step4: If an administrator user logs into the machine, mitm6 will pick that as well and ntlmrelayx as all ways tries to attack and if its succeeds, it will create a random user in the domain controller with the enterprise group privileges, this can be checked in the domain controller (users)
+
+
+#### IPv6 Attack mitigation ( #IPv6 ):
+
+Mitigation Strategies:
+- IPv6 poisoning abuses the fact that windows queries for an IPv6 address even in IPv4-only environments. If you do not use IPv6 internally, the safest way to prevent mitm6 is to block IPv6 internally, the safest way to prevent mitm6 is to block DHCPv6 traffic and incoming router advertisements in Windows Firewall via Group Policy. Disabling IPv6 entirely may have unwanted side effects. Setting the following predefined rules to Block instead of Allow prevents the attack from working:
+	- (Inbound) Core Networking - Dynamic Host Configuration Protocol for IPv6(DHCPV6-In)
+	- (Inbound) Core Networking - Router Advertisement (ICMPv6-In)
+	- (Outbound) Core Networking - Dynamic Host Configuration Protocol for IPv6 (DHCPV6-Out)
+- If WPAD is not in use internally, disable it via Group Policy and by disabling the WinHttpAutoProxySvc Service.
+- Relaying to LDAP and LDAPS can only be mitigated by enabling both LDAP signing and LDAP channel binding.
+- Consider Administrative users to the Protected Users group or marking them as Account is sensitive and cannot be delegated, which will prevent any impersonation of that user via delegation.
+
+
+#### Passback Attacks ( #Passback):
+
+A **pass-back attack** is a type of cyber attack that involves an attacker leveraging a legitimate user's credentials to gain unauthorized access to a system or network. The attacker typically exploits a vulnerability in the authentication process, allowing them to effectively "pass back" authentication information, such as tokens or session identifiers, to impersonate the user. below is the example and process of exploiting a printer LDAP and SMTP protocols:
+
+Link:  [https://www.mindpointgroup.com/blog/how-to-hack-through-a-pass-back-attack/](https://www.mindpointgroup.com/blog/how-to-hack-through-a-pass-back-attack/)
 
 
