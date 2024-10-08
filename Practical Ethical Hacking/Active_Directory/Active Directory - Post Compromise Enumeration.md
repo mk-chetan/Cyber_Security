@@ -8,7 +8,7 @@
 - etc
 
 
-##### ldapdomaindump:
+#### ldapdomaindump:
 
 - This tool is built in kali linux and is useful to grab all the domain detail dump with the exploited account.
 - Syntax:
