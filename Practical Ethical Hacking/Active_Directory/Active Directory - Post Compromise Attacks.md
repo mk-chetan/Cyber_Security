@@ -165,3 +165,59 @@
 	- Just a few attacks: Credential Dumping, Pass-the-Hash, Over-Pass-the-Hash, Pass-the-Ticket, Silver Ticket and Golden ticket
 
 
+
+## Post-Domain Compromise Attack Strategy:
+
+-  We have the domain and the next steps to proceed:
+	- Provide as much value to the client as possible
+		- Put your blinders on and do it again
+		- Dump the NTDS.dit and crack passwords
+		- Enumerate shares for sensitive information
+	- Persistence can be important
+		- What happens if our DA access is lost?
+			- Creating a DA account can be useful (Do not forget to delete it)
+			- Creating a Golden Ticket can be useful, too
+
+- What is NTDS.dit?:
+	- A database used to store AD data, this data includes:
+		- User information
+		- Group information
+		- Security descriptors
+		- And oh yeah, password hashes
+	- We can use secretsdump to dump the NTDS.dit database with below command:
+		- `secretsdump.py {domain}.local/{username}:{'password'}@{DC-IPAddress} -just-dc-ntlm`
+
+-  What is Golden Ticket Attacks:
+	- When we compromise the krbtgt account, we own the domain
+	- We can request access to any resource or system on the domain
+	- Golden tickets == Complete access to every machine
+	- We can utilize mimikatz to obtain the information necessary to perform this attack
+
+#### Additional AD Attacks:
+
+- Active Directory vulnerabilities occur all the time.
+	- Recent major vulnerabilities include:
+		- Zerologon
+		- PrintNightmare
+		- Sam the Admin
+	- It's worth checking for these vulnerabilities, but you should not attempt to exploit them unless your client approves
+
+- Zerologon details:
+	- What is ZeroLogon? - [https://www.trendmicro.com/en_us/what-is/zerologon.html](https://www.trendmicro.com/en_us/what-is/zerologon.html)
+	- dirkjanm CVE-2020-1472 - [https://github.com/dirkjanm/CVE-2020-1472](https://github.com/dirkjanm/CVE-2020-1472)
+	- SecuraBV ZeroLogon Checker - [https://github.com/SecuraBV/CVE-2020-1472](https://github.com/SecuraBV/CVE-2020-1472)
+
+- PrintNightmare:
+	- cube0x0 RCE - [https://github.com/cube0x0/CVE-2021-1675](https://github.com/cube0x0/CVE-2021-1675)
+	- calebstewart LPE - [https://github.com/calebstewart/CVE-2021-1675](https://github.com/calebstewart/CVE-2021-1675)
+
+
+
+### AD Case Study #1:
+
+[https://tcm-sec.com/pentest-tales-001-you-spent-how-much-on-security/](https://tcm-sec.com/pentest-tales-001-you-spent-how-much-on-security)
+### AD Case Study #2:
+
+[https://tcm-sec.com/pentest-tales-002-digging-deep](https://tcm-sec.com/pentest-tales-002-digging-deep)
+
+
