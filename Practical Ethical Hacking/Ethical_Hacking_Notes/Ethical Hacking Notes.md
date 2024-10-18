@@ -22,9 +22,15 @@ Notes:
 
 In this stage, the ethical hacker attempts to gain unauthorized access to the target system or network. The focus is on exploiting vulnerabilities discovered during the scanning stage. Techniques such as password cracking, social engineering, and exploiting software vulnerabilities may be employed to gain access to the target system.
 
+Notes:
+[[Ethical Hacking Methodology (Exploitation)]]
+
 **Maintaining Access:**
 
 Once access is gained, the ethical hacker aims to maintain access to the compromised system or network. This stage involves bypassing security mechanisms, setting up backdoors or remote access tools, and establishing persistent access. The objective is to mimic the actions of a real attacker and assess the potential impact of a successful compromise.
+
+Notes:
+[[Ethical Hacking Methodology (Post Exploitation)]]
 
 **Covering Tracks:**
 
@@ -32,6 +38,8 @@ In the final stage, the ethical hacker removes any traces of their activities fr
 
 It's important to note that ethical hacking should always be performed with proper authorization and within the bounds of the law. Ethical hackers are responsible for following strict ethical guidelines, maintaining confidentiality, and obtaining necessary permissions from the system or network owners before conducting any penetration testing activities.
 
+Notes:
+[[Ethical Hacking Methodology (Post Exploitation)]]
 
 
 
