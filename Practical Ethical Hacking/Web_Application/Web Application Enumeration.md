@@ -57,27 +57,26 @@ Resources:
 
 Bash Script to find the subdomains using AssetFinder and amass easily and filter only sub domains:
 
-		`#!/bin/bash`
-		`url=$1`
-		`if [ ! -d "$url" ];then`
-			`mkdir $url`
-		`fi`
-		`if [ ! -d "$url/recon" ]; then`
-			`mkdir $url/recon`
-		`fi`
-		`echo "[+] Retrieving subdomains with assetfinder....."`
-		`assetfinder $url >> $url/recon/result.txt`
-		`cat $url/recon/result.txt | grep $1 >> $url/recon/final.txt`
-		`rm $url/recon/result.txt`
+		`#!/bin/bash
+		 url=$1
+		 if [ ! -d "$url" ];then
+			`mkdir $url
+		 fi
+		 if [ ! -d "$url/recon" ]; then
+			`mkdir $url/recon
+		 fi
+		 echo "[+] Retrieving subdomains with assetfinder....."
+		 assetfinder $url >> $url/recon/result.txt
+		 cat $url/recon/result.txt | grep $1 >> $url/recon/final.txt
+		 rm $url/recon/result.txt
 		
-		`#echo "[+] Retrieving subdomains with amass....."`
-		`#amass enum -d $url >> $url/recon/f.txt`
-		`#sort -u $url/recon/f.txt >> $url/recon/final.txt`
-		`#rm $url/recon/f.txt`
-		
-		`echo "[+] Probing for alive subdomains with httprobe....."`
-		`cat $url/recon/final.txt | sort -u | httprobe -s -p https:443 | sed 's/https\?:\/\///' | tr -d ':443' >> $url/recon/alive.txt`
-
+		 #echo "[+] Retrieving subdomains with amass....."
+		 #amass enum -d $url >> $url/recon/f.txt
+		 #sort -u $url/recon/f.txt >> $url/recon/final.txt
+		 #rm $url/recon/f.txt
+	
+		 echo "[+] Probing for alive subdomains with httprobe....."
+		 cat $url/recon/final.txt | sort -u | httprobe -s -p https:443 | sed     s/https\?:\/\///' | tr -d ':443' >> $url/recon/alive.txt'
 
 
 #### Additional Resources ( #Resources):
