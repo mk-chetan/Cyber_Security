@@ -29,6 +29,7 @@ This repository is designed to provide a comprehensive collection of resources r
 - **Malware Analysis** (Yet to Update)
 - **Security Tools and Software**
 - **Regulations and Compliance** (Yet to Update)
+- **Bug Bounty Notes**
 
 ### 🔗 Useful Links
 
